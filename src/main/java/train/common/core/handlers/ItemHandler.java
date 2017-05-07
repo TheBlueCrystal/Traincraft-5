@@ -42,11 +42,11 @@ public class ItemHandler {
 	}
 
 	public static boolean handleFreight(Entity entity, ItemStack itemstack) {
-        int logWood = OreDictionary.getOreID("logWood");
-        int plankWood = OreDictionary.getOreID("plankWood");
-        if(itemstack == null) {
-            return false;
-        }
+		int logWood = OreDictionary.getOreID("logWood");
+		int plankWood = OreDictionary.getOreID("plankWood");
+		if(itemstack == null) {
+			return false;
+		}
 		Block block = Block.getBlockFromItem(itemstack.getItem());
 		if (block == null) {
 			return false;
@@ -59,20 +59,20 @@ public class ItemHandler {
 		}
 		if (entity instanceof EntityFlatCarLogs_DB || entity instanceof EntityFreightWood
 				|| entity instanceof EntityFreightWood2) {
-            return OreDictionary.getOreID(itemstack) == logWood;
+			return OreDictionary.getOreID(itemstack) == logWood;
 		}
 		if (entity instanceof EntityFlatCartWoodUS) {
-            return OreDictionary.getOreID(itemstack) == plankWood;
+			return OreDictionary.getOreID(itemstack) == plankWood;
 		}
 		if (entity instanceof EntityFreightCenterbeam_Wood_1 || entity instanceof EntityFreightCenterbeam_Wood_2) {
             int isid = OreDictionary.getOreID(itemstack);
-            return isid == plankWood || isid == logWood;
+			return isid == plankWood || isid == logWood;
 		}
 		if (entity instanceof EntityFreightOpenWagon || entity instanceof EntityFreightCartUS
 				|| entity instanceof EntityFreightClosed || entity instanceof EntityFreightGondola_DB
 				|| entity instanceof EntityFreightOpen2 || entity instanceof EntityFreightHopperUS) {
             int isid = OreDictionary.getOreID(itemstack);
-            return !(isid == plankWood || isid == logWood);
+			return !(isid == plankWood || isid == logWood);
 		}
 		if (entity instanceof EntityFlatCarRails_DB) {
 			if (block instanceof BlockRailBase) {
