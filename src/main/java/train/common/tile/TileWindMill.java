@@ -12,6 +12,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import train.common.core.TrainModBlockUtil;
 import train.common.core.handlers.WorldEvents;
 import train.common.core.util.Energy;
+import train.common.core.handlers.ConfigHandler;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -91,16 +92,23 @@ public class TileWindMill extends Energy implements IEnergyProvider {
 			}
 
 			/**
-			 * Check every 6 seconds a 5x5 area around the windmill top-block if it can see the sky
-             * (possible make the area configureable in the config file)
+			 * Check every 6 seconds if a selectable area around the windmill top-block can see the sky
 			 */
             if(this.updateTicks % 120 == 0) {
-               this.standsOpen = 0;
-               for(int x=-2;x<3;x++)
-                 for(int z=-2;z<3;z++)
-                   if(!this.worldObj.canBlockSeeTheSky(this.xCoord + x, this.yCoord + 1, this.zCoord + z))
-                       this.standsOpen++;
-            }
+                this.standsOpen = 0;
+                int st = ConfigHandler.WINDMILL_CHECK_RADIUS;
+                if(st >= 0) {
+                   int en = st+1;
+                   louter:
+                   for(int x=-st;x<en;x++)
+                     for(int z=-st;z<en;z++)
+                       if(!this.worldObj.canBlockSeeTheSky(this.xCoord + x, this.yCoord + 1, this.zCoord + z))
+                       {
+                           this.standsOpen++;
+                           break louter;
+                       }
+                }
+            } 
 
 			/**
 			 * Calculate production using wind strength
